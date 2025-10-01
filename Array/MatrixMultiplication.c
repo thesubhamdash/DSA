@@ -33,6 +33,7 @@ int main(){
         for(j=0; j<n; j++){
             printf("%d ", A[i][j]);
         }
+        printf("\n");
     }
     printf("\n");
     printf("Elements of matrix B:\n");
@@ -40,6 +41,7 @@ int main(){
         for(j=0; j<q; j++){
             printf("%d ", B[i][j]);
         }
+        printf("\n");
     }
 
     printf("\n");
