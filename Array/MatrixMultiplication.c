@@ -45,19 +45,21 @@ int main(){
     printf("\n");
     printf("Multiplication of Matrices A and B: \n");
 
-    for(i=0; i<m; i++){
-        for(j=0; j<n; j++){
-            M[i][j] = 0;
-            for(k=0; k<n; k++){
-                M[i][j] += A[i][k] + B[k][j]; 
+    for(i=0; i<m; i++){                 // m,n & p,q then resultant matrix -> m,q
+        for(j=0; j<q; j++){
+            int sum = 0;
+            for(k=0; k<m; k++){         // k from 0 to m coz m(1st matrix's row) is responsible for multiplication
+                sum += A[i][k] + B[k][j]; 
             }
+            M[i][j] = sum;
         }
     }
 
     for(i=0; i<m; i++){
-        for(j=0; j<n; j++){
+        for(j=0; j<q; j++){
             printf("%d ", M[i][j]);
         }
+        printf("\n");
     }
     return 0;
 }
