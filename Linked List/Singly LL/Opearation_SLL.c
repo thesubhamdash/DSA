@@ -62,6 +62,75 @@ struct node *insertAnywhere(struct node *head, int value, int pos){
     return head;
 }
 
+struct node *deleteAtBeginning(struct node*head){
+    if(head==NULL){
+        printf("List is empty\n");
+        return head;
+    }
+    struct node *temp = head;
+    head = head->next;
+    free(temp);
+    return head;
+}
+
+struct node *deleteAtEnd(struct node*head){
+    if(head == NULL){
+        printf("List is empty\n");
+        return head;
+    }
+    if(head->next == NULL){
+        free(head);
+        head=NULL;
+        return head;
+    }
+    struct node*temp = head;
+    while(temp->next->next != NULL){
+        temp = temp->next;
+    }
+    struct node*toDel = temp->next;
+    temp->next=NULL;
+    free(toDel);
+    return head;
+}
+
+struct node *deleteAnywhere(struct node*head, int pos){
+    if(head==NULL){
+        printf("List is empty\n");
+        return head;
+    }
+    if(pos==1){
+        head = deleteAtBeginning(head);
+        return head;
+    }
+    struct node*temp = head;
+    int count = 1;
+    while(count<pos-1 && temp!=NULL){
+        temp = temp->next;
+        count += 1;
+    }
+    if(temp==NULL || temp->next==NULL){
+        printf("Position is out of range\n");
+        return head;
+    }
+    struct node*toDel=temp->next;
+    temp->next=toDel->next;
+    free(toDel);
+    return head;
+}
+
+struct node *reversal(struct node*head){
+    struct node *prev=NULL;
+    struct node *current = head;
+    while(current != NULL){
+        struct node*nextnode = current->next;
+        current->next = prev;
+        prev = current;
+        current=nextnode;
+    }
+    head = prev;
+    return head;
+}
+
 int main(){
     struct node *first = (struct node*)malloc(sizeof(struct node));
     struct node *second = (struct node*) malloc(sizeof(struct node));
@@ -85,16 +154,33 @@ int main(){
     printf("After Insertion at beginning\n");
     traverse(head);
 
-    insertAtEnd(head,40);
+    head = insertAtEnd(head,40);
     printf("After Insertion at end\n");
     traverse(head);
 
-    insertAnywhere(head,15,3);
+    head = insertAnywhere(head,15,3);
     printf("After Insertion at any position\n");
     traverse(head);
+   
+    head = deleteAtBeginning(head);
+    printf("After Deletion of head\n");
+    traverse(head);
 
+    head = deleteAtEnd(head);
+    printf("After Deletion at end\n");
+    traverse(head);
+
+    head = deleteAnywhere(head,3);
+    printf("After deletion at any position\n");
+    traverse(head);
+
+    head = reversal(head);
+    printf("After Reversal of the list\n");
+    traverse(head);
+
+    //This is to free every node created in the list
     struct node *temp;
-    while (head != NULL) {
+    while(head != NULL){
         temp = head;
         head = head->next;
         free(temp);
